@@ -57,7 +57,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 			if(mysqli_stmt_execute($stmt)) {
 
 				$id = mysqli_insert_id($conn);
-				echo "Inserted id $id";
+
+				if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+                    $protocol = 'https';
+                } else {
+                    $protocol = 'http';
+                }
+
+                header("Location: $protocol://" . $_SERVER['HTTP_HOST'] . "/article.php?id=$id");
+                exit;
+
+
 			} else {
 
 				echo mysqli_stmt_error($stmt);
@@ -69,6 +79,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <?php require "includes/header.php"; ?>
+
 
 <h2>New Article</h2>
 
@@ -100,8 +111,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 		<button>Add Article</button>
 	</div>
 </form>
-
-<a href="index.php">Return to Blog List...</a>
+<br>
+<a href="index.php">Return to Article List</a>
 
 <?php require "includes/footer.php";
 

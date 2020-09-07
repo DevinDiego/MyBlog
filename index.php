@@ -22,6 +22,8 @@ if($results === false) {
 
 		<?php require "includes/header.php"; ?>
 
+		<a href="new_article.php">Post a new article</a>
+
 		<ul>
 			<?php foreach($articles as $article): ?>
 				<li>
@@ -35,7 +37,6 @@ if($results === false) {
 			<?php endforeach; ?>
 		</ul>
 	<?php endif; ?>
-
-	<a href="new_article.php">Create a new article...</a>
+	
 
 	<?php require "includes/footer.php"; ?>
