@@ -1,8 +1,8 @@
 <?php 
 
 require "includes/config.php";
+require "includes/get_article.php";
 
-$errors = [];
 $title = '';
 $content = '';
 $published_at = '';
@@ -13,27 +13,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	$content = $_POST['content'];
 	$published_at = $_POST['published_at'];
 
-	if($title == '') {
-		$errors[] = "Title is required";		
-	}
-
-	if($content == '') {
-		$errors[] = "Content is required";
-	}
-
-	if($published_at == '') {
-		$date_time = date_create_from_format('Y-m-d H:i:s', $published_at);
-
-		if($date_time === false) {
-			$errors = "Invalid date and time";
-		} else {
-			$date_errors = date_get_last_errors();
-
-			if($date_errors['warning_count'] > 0) {
-				$errors[] = "Invalid date and time";
-			}
-		}
-	}
+	$errors = validateArticle($title, $content, $published_at);
 
 	if(empty($errors)) {
 
@@ -58,14 +38,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 				$id = mysqli_insert_id($conn);
 
-				if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
-                    $protocol = 'https';
-                } else {
-                    $protocol = 'http';
-                }
+				// if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+				// 	$protocol = 'https';
+				// } else {
+				// 	$protocol = 'http';
+				// }
 
-                header("Location: $protocol://" . $_SERVER['HTTP_HOST'] . "/article.php?id=$id");
-                exit;
+				// header("Location: $protocol://" . $_SERVER['HTTP_HOST'] . "/article.php?id=$id");
+				header("Location: index.php");
+				exit;
 
 
 			} else {
@@ -83,36 +64,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <h2>New Article</h2>
 
-<?php if(!empty($errors)): ?>
-	<ul>
-		<?php foreach($errors as $error): ?>
-			<li><?=$error ?></li>
-		<?php endforeach; ?>
-	</ul> 
-<?php endif; ?>
-
-<form method="post">
-	<div>
-		<label for="title">Title:&nbsp;</label>
-		<input type="text" name="title" id="title" placeholder="Title" value="<?=htmlspecialchars($title);?>">
-	</div>
-
-	<div>
-		<label for="content">Content:&nbsp;</label>
-		<textarea name="content" rows="4" cols="40" id="content" placeholder="Article Content"><?=htmlspecialchars($content);?></textarea>
-	</div>
-
-	<div>
-		<label for="published_at">Date/Time:&nbsp;</label>
-		<input type="datetime-local" name="published_at" id="published_at" value="<?=htmlspecialchars($published_at); ?>">
-	</div>
-
-	<div>
-		<button>Add Article</button>
-	</div>
-</form>
-<br>
-<a href="index.php">Return to Article List</a>
+<?php require "includes/reusable_article_form.php"; ?>
 
 <?php require "includes/footer.php";
 

@@ -36,7 +36,6 @@ if($results === false) {
 				</li>
 			<?php endforeach; ?>
 		</ul>
-	<?php endif; ?>
-	
+	<?php endif; ?>	
 
 	<?php require "includes/footer.php"; ?>
