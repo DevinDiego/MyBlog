@@ -9,24 +9,25 @@ if(isset($_GET['id'])) {
 
 	$article = getArticle($conn, $_GET['id']);
 
-	if($article) {	
+	if($article) {
 
+		$id = $article['id'];
 		$title = $article['title'];
 		$content = $article['content'];
-		$published_at = $article['published_at'];	
+		$published_at = $article['published_at'];
 
 	} else {
 
-		die("article not found");
-	}
+		die("Article not found!");
 
+	}
 } else {
 
-	die("id not supplied, article not found");
+	die("id not supplied, article not found!");
 }
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {	
-
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+	
 	$title = $_POST['title'];
 	$content = $_POST['content'];
 	$published_at = $_POST['published_at'];
@@ -34,12 +35,36 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	$errors = validateArticle($title, $content, $published_at);
 
 	if(empty($errors)) {
+		
+		$stmt = mysqli_prepare($conn, "UPDATE article SET title = ?, content = ?, published_at = ? WHERE id = ?");
 
-		die("Form is valid");
-	}
+		if($stmt === false) {
+
+			echo mysqli_error($conn);
+
+		} else {
+
+			if($published_at == '') {
+
+				$published_at = null;
+			}
+
+			mysqli_stmt_bind_param($stmt, "sssi", $title, $content, $published_at, $id);
+
+			if(mysqli_stmt_execute($stmt)) {
+				
+				header("Location: index.php");
+				exit;
+
+			} else {
+
+				echo mysqli_stmt_error($stmt);
+			}
+		}
+	} // END if(empty($errors))
 }
 
-?>
+ ?>
 
 <?php require "includes/header.php"; ?>
 
@@ -47,5 +72,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 <h2>Edit Article</h2>
 
 <?php require "includes/reusable_article_form.php"; ?>
+
+<a href="index.php">Never mind, return to article list!</a>
 
 <?php require "includes/footer.php"; ?>
