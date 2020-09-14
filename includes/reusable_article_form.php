@@ -23,6 +23,7 @@
 	</div>
 
 	<div>
-		<button>Save</button>
+		<br>
+		<button>SAVE</button>
 	</div>
 </form>

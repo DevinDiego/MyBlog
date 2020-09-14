@@ -64,7 +64,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	} // END if(empty($errors))
 }
 
- ?>
+?>
 
 <?php require "includes/header.php"; ?>
 
@@ -72,7 +72,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 <h2>Edit Article</h2>
 
 <?php require "includes/reusable_article_form.php"; ?>
-
-<a href="index.php">Never mind, return to article list!</a>
+<br>
+<button><a href="index.php">CANCEL</a></button>
 
 <?php require "includes/footer.php"; ?>

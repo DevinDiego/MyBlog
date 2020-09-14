@@ -22,7 +22,7 @@ if($results === false) {
 
 		<?php require "includes/header.php"; ?>
 
-		<a href="new_article.php">Post a new article</a>
+		<h2>Article Archive</h2>		
 
 		<ul>
 			<?php foreach($articles as $article): ?>
@@ -37,5 +37,7 @@ if($results === false) {
 			<?php endforeach; ?>
 		</ul>
 	<?php endif; ?>	
+
+	<button><a href="new_article.php">NEW</a></button>
 
 	<?php require "includes/footer.php"; ?>

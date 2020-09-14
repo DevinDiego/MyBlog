@@ -13,24 +13,27 @@ if(isset($_GET['id'])) {
 	$article = null;
 }
 
- ?>
+?>
 
- <?php if($article === null): ?>
- <p>No article found!</p> 
- <?php else: ?>
+<?php if($article === null): ?>
+	<p>No article found!</p> 
+	<?php else: ?>
 
- 	<?php require "includes/header.php"; ?>
- 	<article>
- 		<h2><?=htmlspecialchars($article['title']); ?></h2>
- 		<h4><?=htmlspecialchars($article['content']); ?></h4>
- 		<p><?=htmlspecialchars($article['published_at']); ?></p>
- 	</article>
- <?php endif; ?>
+		<?php require "includes/header.php"; ?>
+		<article>
+			<h2><?=htmlspecialchars($article['title']); ?></h2>
+			<h4><?=htmlspecialchars($article['content']); ?></h4>
+			<p><?=htmlspecialchars($article['published_at']); ?></p>
+		</article>
+	<?php endif; ?>
 
- <a href="index.php">Return to Blog List...</a><br><br>
- 
- <a href="edit_article.php?id=<?=$article['id'];?>">Edit this article!</a>
 
- <?php require "includes/footer.php"; ?>
 
- 
+	<button><a href="edit_article.php?id=<?=$article['id'];?>">EDIT</a></button>
+
+	<button><a href="delete_article.php?id=<?=$article['id'];?>">DELETE</a></button>
+	
+	<button><a href="index.php">ARCHIVE</a></button>
+
+	<?php require "includes/footer.php"; ?>
+

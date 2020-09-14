@@ -62,9 +62,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php require "includes/header.php"; ?>
 
 
-<h2>New Article</h2>
+<h2>Post a new article</h2>
 
 <?php require "includes/reusable_article_form.php"; ?>
+
+<br>
+<button><a href="index.php">CANCEL</a></button>
 
 <?php require "includes/footer.php";
 
